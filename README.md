@@ -1,9 +1,9 @@
 # Event
-A typed remote event wrapper, taking advantage of function types (...) -> () for defined parameters on both the firing and listening aspects of the API.
+A typed remote event wrapper, taking advantage of function types (...) -> () for defined parameters on both the firing and listening aspects of the API. Supports both reliable and unreliable remote events.
 
 Holds the same API as remote events, with the only exception being its distinction between `client` and `server` methods. Usage is as seen below:
 ```lua
-local event = Event.newReliable():: Event.ServerToClientReliable<(foo: boolean, fee: string) -> ()>
+local event = Event.newReliable():: Event.ServerToClient<(foo: boolean, fee: string) -> ()>
 
 -- will automatically define the parameters `foo` and `fee` with the defined types
 event.client.OnClientEvent:Connect(function(foo: boolean, fee: string) 
