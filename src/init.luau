@@ -19,7 +19,29 @@ local function assertServer()
     assert(RunService:IsServer(), "Attempted to run server-only function!")
 end
 
-local function newEvent<
+local function getReliableEvent(name: string): RemoteEvent
+    local event = script:FindFirstChild(name)
+    if not event then -- allowing client/server boundary to access the same instance
+        event = Instance.new("RemoteEvent")
+        event.Name = name
+        event.Parent = script
+    end
+
+    return (event:: RemoteEvent)
+end
+
+local function getUnreliableEvent(name: string): UnreliableRemoteEvent
+    local event = script:FindFirstChild(name)
+    if not event then -- allowing client/server boundary to access the same instance
+        event = Instance.new("UnreliableRemoteEvent")
+        event.Name = name
+        event.Parent = script
+    end
+
+    return (event:: UnreliableRemoteEvent)
+end
+
+local function wrapEvent<
     clientToServerSignature,
     serverToClientSignature
 >(remoteEvent: any): Event<clientToServerSignature, serverToClientSignature>
@@ -73,38 +95,76 @@ local function newEvent<
         function self.server.OnServerEvent.Connect(self: Event & Types.PrivateEvent, callback)
             assertServer()
             
-            return remoteEvent.OnClientEvent:Connect(callback)
+            return remoteEvent.OnServerEvent:Connect(callback)
         end
         function self.server.OnServerEvent.ConnectParallel(self: Event & Types.PrivateEvent, callback)
             assertServer()
             
-            return remoteEvent.OnClientEvent:ConnectParallel(callback)
+            return remoteEvent.OnServerEvent:ConnectParallel(callback)
         end
         function self.server.OnServerEvent.Once(self: Event & Types.PrivateEvent, callback)
             assertServer()
             
-            return remoteEvent.OnClientEvent:Once(callback)
+            return remoteEvent.OnServerEvent:Once(callback)
         end
     end
 
     return self
 end
 
+--[[
+    RELIABLE REMOTE EVENTS
+]]
+
 function Event.newReliable<
     clientToServerSignature,
     serverToClientSignature
->(): Event<clientToServerSignature, serverToClientSignature>
-    return newEvent<<clientToServerSignature, serverToClientSignature>>(
-        Instance.new("RemoteEvent")
+>(
+    name: string
+): Event<clientToServerSignature, serverToClientSignature>
+
+    return wrapEvent<<clientToServerSignature, serverToClientSignature>>(
+        getReliableEvent(name)
     )
 end
+
+function Event.wrapReliable<
+    clientToServerSignature,
+    serverToClientSignature
+>(
+    remoteEvent: RemoteEvent
+): Event<clientToServerSignature, serverToClientSignature>
+
+    return wrapEvent<<clientToServerSignature, serverToClientSignature>>(
+        remoteEvent
+    )
+end
+
+--[[
+    UNRELIABLE REMOTE EVENTS
+]]
 
 function Event.newUnreliable<
     clientToServerSignature,
     serverToClientSignature
->(): Event<clientToServerSignature, serverToClientSignature>
-    return newEvent<<clientToServerSignature, serverToClientSignature>>(
-        Instance.new("UnreliableRemoteEvent")
+>(
+    name: string
+): Event<clientToServerSignature, serverToClientSignature>
+
+    return wrapEvent<<clientToServerSignature, serverToClientSignature>>(
+        getUnreliableEvent(name)
+    )
+end
+
+function Event.wrapUnreliable<
+    clientToServerSignature,
+    serverToClientSignature
+>(
+    unreliableRemoteEvent: UnreliableRemoteEvent
+): Event<clientToServerSignature, serverToClientSignature>
+
+    return wrapEvent<<clientToServerSignature, serverToClientSignature>>(
+        unreliableRemoteEvent
     )
 end
 
