@@ -1,7 +1,7 @@
 # Event
 A typed remote event wrapper, taking advantage of function types (...) -> () for typechecking parameters on both firing and listening.
 
-By default, Event creates the remote instances behind the scenes, ensuring both the server and client access the same event instances.
+By default, Event creates the remote instances behind the scenes, merely requiring a unique name.
 * `newReliable(remoteName: string)`
 * `newUnreliable(unreliableRemoteName: string)`
 
