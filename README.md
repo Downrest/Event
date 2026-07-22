@@ -9,7 +9,7 @@ Alternatively, you can also reference static remote instances.
 * wrapReliable(remoteEvent: RemoteEvent)
 * wrapUnreliable(unreliableRemoteEvent: UnreliableRemoteEvent)
 
-Holds the same API as remote events, with the only exception being its distinction between `client` and `server` methods:
+Event's API is *almost* 1:1 with Roblox remote instances' API, with the exception having methods split into `client` and `server`:
 ```lua
 local event = Event.newReliable():: Event.ServerToClient<(foo: boolean, fee: string) -> ()>
 
