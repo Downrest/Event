@@ -26,7 +26,7 @@ end
     RELIABLE REMOTE EVENTS
 ]]
 
-export type ReliableClientFire<
+export type ClientFire<
     clientToServerSignature = DefaultSignature,
     serverToClientSignature = DefaultSignature
 > = {
@@ -35,24 +35,24 @@ export type ReliableClientFire<
         clientToServerSignature
     >;
 }
-export type ReliableClientListener<
+export type ClientListener<
     clientToServerSignature = DefaultSignature,
     serverToClientSignature = DefaultSignature
 > = {
     Connect: (
-        self: ReliableClientListener<clientToServerSignature, serverToClientSignature>, 
+        self: ClientListener<clientToServerSignature, serverToClientSignature>, 
         callback: serverToClientSignature
     ) -> RBXScriptConnection;
     ConnectParallel: (
-        self: ReliableClientListener<clientToServerSignature, serverToClientSignature>, 
+        self: ClientListener<clientToServerSignature, serverToClientSignature>, 
         callback: serverToClientSignature
     ) -> RBXScriptConnection;
     Once: (
-        self: ReliableClientListener<clientToServerSignature, serverToClientSignature>, 
+        self: ClientListener<clientToServerSignature, serverToClientSignature>, 
         callback: serverToClientSignature
     ) -> RBXScriptConnection;
 }
-export type ReliableServerFire<
+export type ServerFire<
     clientToServerSignature = DefaultSignature,
     serverToClientSignature = DefaultSignature
 > = {
@@ -65,46 +65,46 @@ export type ReliableServerFire<
         serverToClientSignature
     >;
 }
-export type ReliableServerListener<
+export type ServerListener<
     clientToServerSignature = DefaultSignature,
     serverToClientSignature = DefaultSignature
 > = {
     Connect: (
-        self: ReliableServerListener<clientToServerSignature, serverToClientSignature>, 
+        self: ServerListener<clientToServerSignature, serverToClientSignature>, 
         callback: PushFrontSignature<Player, clientToServerSignature>
     ) -> RBXScriptConnection;
     ConnectParallel: (
-        self: ReliableServerListener<clientToServerSignature, serverToClientSignature>, 
+        self: ServerListener<clientToServerSignature, serverToClientSignature>, 
         callback: PushFrontSignature<Player, clientToServerSignature>
     ) -> RBXScriptConnection;
     Once: (
-        self: ReliableServerListener<clientToServerSignature, serverToClientSignature>, 
+        self: ServerListener<clientToServerSignature, serverToClientSignature>, 
         callback: PushFrontSignature<Player, clientToServerSignature>
     ) -> RBXScriptConnection;
 }
 
-export type ReliableEvent<
+export type Event<
     clientToServerSignature = DefaultSignature,
     serverToClientSignature = DefaultSignature
 > = {
     client: 
-        ReliableClientFire<clientToServerSignature, serverToClientSignature>
+        ClientFire<clientToServerSignature, serverToClientSignature>
         & {
-            OnClientEvent: ReliableClientListener<clientToServerSignature, serverToClientSignature>;
+            OnClientEvent: ClientListener<clientToServerSignature, serverToClientSignature>;
         }
     ;
     server: 
-        ReliableServerFire<clientToServerSignature, serverToClientSignature>
+        ServerFire<clientToServerSignature, serverToClientSignature>
         & {
-            OnServerEvent: ReliableServerListener<clientToServerSignature, serverToClientSignature>;
+            OnServerEvent: ServerListener<clientToServerSignature, serverToClientSignature>;
         }
     ;
 }
-export type PrivateReliableEvent = {
+export type PrivateEvent = {
     _remoteEvent: RemoteEvent
 }
 
-export type ClientToServerReliable<signature = DefaultSignature> = ReliableEvent<signature, any>
-export type ServerToClientReliable<signature = DefaultSignature> = ReliableEvent<any, signature>
+export type ClientToServer<signature = DefaultSignature> = Event<signature, any>
+export type ServerToClient<signature = DefaultSignature> = Event<any, signature>
 
 return Types
