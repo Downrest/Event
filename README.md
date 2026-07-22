@@ -1,7 +1,15 @@
 # Event
-A typed remote event wrapper, taking advantage of function types (...) -> () for typechecking parameters on both the firing and listening aspects of the API. Supports both RemoteEvents thru `newReliable()` and UnreliableRemoteEvents thru `newUnreliable()`.
+A typed remote event wrapper, taking advantage of function types (...) -> () for typechecking parameters on both the firing and listening aspects of the API. 
 
-Holds the same API as remote events, with the only exception being its distinction between `client` and `server` methods. Usage is as seen below:
+By default, Event handles the creation of the remote instances behind the scenes, ensuring both the server and client can access the same event instances.
+* newReliable(remoteName: string)
+* newUnreliable(unreliableRemoteName: string)
+
+Alternatively, you can also reference static remote instances.
+* wrapReliable(remoteEvent: RemoteEvent)
+* wrapUnreliable(unreliableRemoteEvent: UnreliableRemoteEvent)
+
+Holds the same API as remote events, with the only exception being its distinction between `client` and `server` methods:
 ```lua
 local event = Event.newReliable():: Event.ServerToClient<(foo: boolean, fee: string) -> ()>
 
