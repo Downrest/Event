@@ -1,13 +1,13 @@
 # Event
 A typed remote event wrapper, taking advantage of function types (...) -> () for typechecking parameters on both firing and listening.
 
-By default, Event handles the creation of the remote instances behind the scenes, ensuring both the server and client can access the same event instances.
-* newReliable(remoteName: string)
-* newUnreliable(unreliableRemoteName: string)
+By default, Event handles the creation of the remote instances behind the scenes, ensuring both the server and client access the same event instances.
+* `newReliable(remoteName: string)`
+* `newUnreliable(unreliableRemoteName: string)`
 
 Alternatively, you can also reference static remote instances.
-* wrapReliable(remoteEvent: RemoteEvent)
-* wrapUnreliable(unreliableRemoteEvent: UnreliableRemoteEvent)
+* `wrapReliable(remoteEvent: RemoteEvent)`
+* `wrapUnreliable(unreliableRemoteEvent: UnreliableRemoteEvent)`
 
 Event's API is *almost* 1:1 with Roblox remote instances' API, with the exception having methods split into `client` and `server`:
 ```lua
