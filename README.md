@@ -5,7 +5,8 @@ Holds the same API as remote events, with the only exception being its distincti
 ```lua
 local event = Event.newReliable():: Event.ServerToClientReliable<(foo: boolean, fee: string) -> ()>
 
-event.client.OnClientServer:Connect(function(foo: boolean, fee: string) -- will automatically define the parameters with the defined types
+-- will automatically define the parameters `foo` and `fee` with the defined types
+event.client.OnClientServer:Connect(function(foo: boolean, fee: string) 
     ...
 end
 
