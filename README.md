@@ -8,7 +8,7 @@ local event = Event.newReliable():: Event.ServerToClientReliable<(foo: boolean, 
 -- will automatically define the parameters `foo` and `fee` with the defined types
 event.client.OnClientServer:Connect(function(foo: boolean, fee: string) 
     ...
-end
+end)
 
 event.server:FireAllClients(true, false) -- TypeError: Expected this to be `string`, but got `boolean`
 ```
