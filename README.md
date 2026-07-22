@@ -1,5 +1,5 @@
 # Event
-A typed remote event wrapper, taking advantage of function types (...) -> () for defined parameters on both the firing and listening aspects of the API. Supports both reliable and unreliable remote events.
+A typed remote event wrapper, taking advantage of function types (...) -> () for defined parameters on both the firing and listening aspects of the API. Supports both RemoteEvents thru `newReliable()` and UnreliableRemoteEvents thru `newUnreliable()`.
 
 Holds the same API as remote events, with the only exception being its distinction between `client` and `server` methods. Usage is as seen below:
 ```lua
