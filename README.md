@@ -13,4 +13,4 @@ end)
 event.server:FireAllClients(true, false) -- TypeError: Expected this to be `string`, but got `boolean`
 ```
 
-The usage of type functions is heavily inspired from how [NamedSignal](https://github.com/averlyst/NamedSignal) handles its signal signatures, go check it out!
+The usage of type functions is heavily inspired from how [NamedSignal](https://github.com/averlyst/NamedSignal) handles its signal signatures, allowing anonymous autofills to include the parameter names + further verbosity when casting types.
