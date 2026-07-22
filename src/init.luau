@@ -120,11 +120,11 @@ function Event.newReliable<
     clientToServerSignature,
     serverToClientSignature
 >(
-    name: string
+    remoteName: string
 ): Event<clientToServerSignature, serverToClientSignature>
 
     return wrapEvent<<clientToServerSignature, serverToClientSignature>>(
-        getReliableEvent(name)
+        getReliableEvent(remoteName)
     )
 end
 
@@ -148,11 +148,11 @@ function Event.newUnreliable<
     clientToServerSignature,
     serverToClientSignature
 >(
-    name: string
+    unreliableRemoteName: string
 ): Event<clientToServerSignature, serverToClientSignature>
 
     return wrapEvent<<clientToServerSignature, serverToClientSignature>>(
-        getUnreliableEvent(name)
+        getUnreliableEvent(unreliableRemoteName)
     )
 end
 
