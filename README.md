@@ -1,5 +1,5 @@
 # Event
-A typed remote event wrapper, taking advantage of function types (...) -> () for typechecking parameters on both the firing and listening aspects of the API. 
+A typed remote event wrapper, taking advantage of function types (...) -> () for typechecking parameters on both firing and listening.
 
 By default, Event handles the creation of the remote instances behind the scenes, ensuring both the server and client can access the same event instances.
 * newReliable(remoteName: string)
